@@ -16,7 +16,7 @@ public class Query {
 	ArrayList<IPLStats> al= new ArrayList<IPLStats>();
 	
 	//String csvFile="/home/mukyadav/Development/STS/Query/scr_file/ipl.csv"	;
-	String csvFile="/home/sapient/Desktop/STS/Query/scr_file/ipl.csv"	;
+	String csvFile="/home/sapient/Desktop/STS/Query/src/main/resources/ipl.csv"	;
 
 	String line="";
 	String cvsSplitBy="[,]";
