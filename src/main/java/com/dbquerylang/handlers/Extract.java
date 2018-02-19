@@ -1,18 +1,27 @@
 package com.dbquerylang.handlers;
 
+import java.util.ArrayList;
+
 public class Extract {
-	public void extractFile(String arr1[],int l )
+	public boolean extractFile(String arr1[],int l )
 	{
+		boolean flag=false;
 		System.out.println("extractFile");	
 		for(int i=1;i<l;i++) {
 			if(arr1[i].contains(".csv"))
 			{
+				flag=true;
 				System.out.print(arr1[i]+"\n");	
 				break;
 			}
 		
 				//
 		}
+		if(flag==false)
+		{
+			System.out.println("File Not Valid In the Query");
+		}
+		return flag;
 	}
 	public void extractBase(String arr1[],int l )
 	{
@@ -45,7 +54,6 @@ public class Extract {
 	{
 		System.out.println("\nextractLogical");	
 		int flag=100;
-		System.out.print("\n");
 		for(int i=0;i<l;i++) {
 			if(arr1[i].equalsIgnoreCase("where"))
 			{
@@ -60,7 +68,14 @@ public class Extract {
 						arr1[i].equalsIgnoreCase("||")||
 						arr1[i].equalsIgnoreCase("!")))
 				{
-					System.out.print(arr1[i]+"  ");
+					Restrictions res= new Restrictions();
+					ArrayList<Restrictions> al= new ArrayList<Restrictions>();
+						res.setOperand1(arr1[i++]);
+						res.setOperator(arr1[i++]);
+						res.setOperand2(arr1[i]);
+						al.add(res);
+						System.out.print(res.getOperand1()+"  "+res.getOperator()+" "+res.getOperand2());
+					
 				}
 				else
 					System.out.print("\n");
@@ -92,7 +107,13 @@ public class Extract {
 					//System.out.print(arr1[i]+"  ");
 				}
 				else
-					System.out.print(arr1[i]+"  ");
+				{
+					ArrayList<LogicalOperators> al= new ArrayList<LogicalOperators>();
+					LogicalOperators operators= new LogicalOperators();
+					operators.setOperator(arr1[i]);
+					al.add(operators);
+					System.out.print(operators.getOperator()+"  ");
+			}
 			}
 				//
 		}
@@ -100,13 +121,28 @@ public class Extract {
 	
 	public void extractField(String arr1[],int l )
 	{
+		ArrayList<QueryParameterclass> al= new ArrayList<QueryParameterclass>();
 		System.out.println("\nextractField");	
 		for(int i=1;i<l;i++) {
 			if(arr1[i].equalsIgnoreCase("from"))
 			{
 			break;	
 			}
-			System.out.print(arr1[i]+"\n");
+			if(!(arr1[i].contains("sum(")||
+					arr1[i].contains("min(")||
+					arr1[i].contains("max(")||
+					arr1[i].contains("avg(")||
+					arr1[i].contains("count(")
+					))
+			{
+				
+				QueryParameterclass para=new QueryParameterclass();
+				para.setPara(arr1[i]);
+				al.add(para);
+				System.out.print(para.getPara()+"\n");	
+			}
+		
+			//System.out.print(arr1[i]+"\n");
 				//
 		}
 	}
@@ -114,11 +150,12 @@ public class Extract {
 	public void extractOrderBy(String arr1[],int l )
 	{
 		System.out.println("extractOrderBy");
-		System.out.print("\n");
 		for(int i=0;i<l-1;i++) {
 			if(arr1[i].equalsIgnoreCase("order")&&arr1[i+1].equalsIgnoreCase("by"))
 			{
-				System.out.println(arr1[i+2]+"  ");
+				OrderBy or= new OrderBy();
+				or.setOrderBy(arr1[i+2]);
+				System.out.println(or.getOrderBy()+"  ");
 			}
 			
 				//
@@ -130,10 +167,35 @@ public class Extract {
 		for(int i=0;i<l-1;i++) {
 			if(arr1[i].equalsIgnoreCase("group")&&arr1[i+1].equalsIgnoreCase("by"))
 			{
-				System.out.println(arr1[i+2]+"  ");
+				GroupBy gr= new GroupBy();
+				gr.setGroupBy(arr1[i+2]);
+				System.out.println(gr.getGroupBy()+"  ");
 			}
 				//
 		}
+	}
+	public void extractAggregate(String arr1[],int l )
+	{
+		System.out.println("extractAggregate");	
+		for(int i=1;i<l;i++) {
+			if(arr1[i].contains("sum(")||
+					arr1[i].contains("min(")||
+					arr1[i].contains("max(")||
+					arr1[i].contains("avg(")||
+					arr1[i].contains("count(")
+					)
+			{
+				ArrayList<AggregateFunctions> al= new ArrayList<AggregateFunctions>();
+				AggregateFunctions agr= new AggregateFunctions();
+				agr.setFunc(arr1[i]);
+				al.add(agr);
+				System.out.print(agr.getFunc()+"\n");	
+				
+			}
+		
+				//
+		}
+		
 	}
 	
 }

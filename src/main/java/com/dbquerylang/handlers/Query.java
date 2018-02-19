@@ -6,7 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 //import java.sql.Date;
 import java.util.ArrayList;
-//import java.util.Iterator;
+import java.util.Iterator;
 import java.util.Scanner;
 
 public class Query {
@@ -100,21 +100,17 @@ public class Query {
 		}
 		}
 
-//	Iterator<IPLStats> itr =al.iterator();
-	/*while(itr.hasNext())
+/*	Iterator<IPLStats> itr =al.iterator();
+	while(itr.hasNext())
 	{
 		IPLStats matches=itr.next();
 		System.out.println(matches.umpire1);
 		
-	}
-		*/
+	}*/
+	
+		
 	final String WITH_DELIMITER = "((?<=%1$s)|(?=%1$s))";
-	System.out.println("Enter query");
-	//Scanner sc = new Scanner(System.in);
-	//String query= sc.nextLine();
-
-	//sc.close();
-	String query="select avg(win_by_wickets),min(win_by_runs) from ipl.csv";
+	String query="select id,avg(win_by_wickets),city ,min(win_by_runs) from ipl.csv where city<='Bangalore' and date='2018-02-14' order by id group by city";
 	System.out.println(query);
 	
 	String arr[]=query.split(String.format(WITH_DELIMITER,"[,*<>=\\s]"));
@@ -122,14 +118,15 @@ public class Query {
 	String arr1[]=new String[k];
 	for(int i=0; i<arr.length;i++)
 	{
-		if(arr[i].matches("[,\\s]")) {
+		if(arr[i].matches("[,<>\\s]")) {
 			diff++;
 			continue;}
 		arr1[j++]=arr[i];
 		
 	}
 	Extract ex=new Extract();
-	ex.extractFile(arr1,arr1.length-diff );
+	boolean fileCheck=ex.extractFile(arr1,arr1.length-diff );
+	if(fileCheck) {
 	ex.extractBase(arr1,arr1.length-diff );
 	ex.extractFilter(arr1,arr1.length-diff );
 	ex.extractLogical(arr1,arr1.length-diff );
@@ -137,6 +134,8 @@ public class Query {
 	ex.extractField(arr1,arr1.length-diff );
 	ex.extractOrderBy(arr1,arr1.length-diff );
 	ex.extractGroupBy(arr1,arr1.length-diff );
+	ex.extractAggregate(arr1,arr1.length-diff );
+	}
 	for(int l=0; l<arr1.length-diff;l++)
 	{
 		//System.out.println(arr1[l]);
