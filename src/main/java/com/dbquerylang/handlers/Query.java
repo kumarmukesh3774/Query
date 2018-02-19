@@ -4,9 +4,9 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.Date;
+//import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Iterator;
+//import java.util.Iterator;
 import java.util.Scanner;
 
 public class Query {
@@ -14,13 +14,17 @@ public class Query {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 	ArrayList<IPLStats> al= new ArrayList<IPLStats>();
-	String csvFile="/home/mukyadav/Development/STS/Query/scr_file/ipl.csv"	;
+	
+	//String csvFile="/home/mukyadav/Development/STS/Query/scr_file/ipl.csv"	;
+	String csvFile="/home/sapient/Desktop/STS/Query/scr_file/ipl.csv"	;
+
 	String line="";
 	String cvsSplitBy="[,]";
 	FileReader file=null;
+	BufferedReader br=null;
 	try {
 		file = new FileReader(csvFile);
-		BufferedReader br=new BufferedReader(file);
+		br=new BufferedReader(file);
 		try {
 			br.readLine();
 			while((line = br.readLine()) != null)
@@ -87,7 +91,16 @@ public class Query {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
-	Iterator<IPLStats> itr =al.iterator();
+	finally {
+		try {
+			br.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		}
+
+//	Iterator<IPLStats> itr =al.iterator();
 	/*while(itr.hasNext())
 	{
 		IPLStats matches=itr.next();
@@ -99,6 +112,10 @@ public class Query {
 	System.out.println("Enter query");
 	Scanner sc = new Scanner(System.in);
 	String query= sc.nextLine();
+
+	sc.close();
+			
+
 	String arr[]=query.split(String.format(WITH_DELIMITER,"[,*<>=\\s]"));
 	int j=0,k=arr.length, diff=0;
 	String arr1[]=new String[k];
@@ -124,8 +141,6 @@ public class Query {
 		//System.out.println(arr1[l]);
 		
 	}
-	
-	
 	
 	
 	

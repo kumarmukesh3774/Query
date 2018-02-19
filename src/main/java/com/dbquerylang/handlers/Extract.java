@@ -3,10 +3,11 @@ package com.dbquerylang.handlers;
 public class Extract {
 	public void extractFile(String arr1[],int l )
 	{
+		System.out.println("extractFile");	
 		for(int i=1;i<l;i++) {
 			if(arr1[i].contains(".csv"))
 			{
-				System.out.print("\n"+arr1[i]);	
+				System.out.print(arr1[i]+"\n");	
 				break;
 			}
 		
@@ -15,17 +16,19 @@ public class Extract {
 	}
 	public void extractBase(String arr1[],int l )
 	{
+		System.out.println("extractBase");	
 		for(int i=0;i<l;i++) {
 			if(arr1[i].equalsIgnoreCase("where"))
 			{
 			break;	
 			}
-			System.out.print("\n"+arr1[i]+"\n");
+			System.out.print(arr1[i]+"\n");
 				//
 		}
 	}
 	public void extractFilter(String arr1[],int l )
 	{
+		System.out.println("extractFilter");	
 		int flag=100;
 		System.out.print("\n");
 		for(int i=0;i<l;i++) {
@@ -40,6 +43,7 @@ public class Extract {
 	}
 	public void extractLogical(String arr1[],int l )
 	{
+		System.out.println("\nextractLogical");	
 		int flag=100;
 		System.out.print("\n");
 		for(int i=0;i<l;i++) {
@@ -68,6 +72,7 @@ public class Extract {
 	
 	public void extractLogicalOperators(String arr1[],int l )
 	{
+		System.out.println("\nextractLogicalOperators");	
 		int flag=100;
 		System.out.print("\n");
 		for(int i=0;i<l;i++) {
@@ -95,20 +100,20 @@ public class Extract {
 	
 	public void extractField(String arr1[],int l )
 	{
-		System.out.print("\n");
+		System.out.println("\nextractField");	
 		for(int i=1;i<l;i++) {
 			if(arr1[i].equalsIgnoreCase("from"))
 			{
 			break;	
 			}
-			System.out.print("\n"+arr1[i]);
+			System.out.print(arr1[i]+"\n");
 				//
 		}
 	}
 	
 	public void extractOrderBy(String arr1[],int l )
 	{
-		
+		System.out.println("extractOrderBy");
 		System.out.print("\n");
 		for(int i=0;i<l-1;i++) {
 			if(arr1[i].equalsIgnoreCase("order")&&arr1[i+1].equalsIgnoreCase("by"))
@@ -121,8 +126,7 @@ public class Extract {
 	}
 	public void extractGroupBy(String arr1[],int l )
 	{
-		
-		System.out.print("\n");
+		System.out.println("extractGroupBy");
 		for(int i=0;i<l-1;i++) {
 			if(arr1[i].equalsIgnoreCase("group")&&arr1[i+1].equalsIgnoreCase("by"))
 			{
@@ -132,5 +136,4 @@ public class Extract {
 		}
 	}
 	
-
 }
