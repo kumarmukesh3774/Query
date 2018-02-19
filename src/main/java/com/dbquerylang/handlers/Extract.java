@@ -3,6 +3,8 @@ package com.dbquerylang.handlers;
 import java.util.ArrayList;
 
 public class Extract {
+	
+	//file name extractin and validation
 	public boolean extractFile(String arr1[],int l )
 	{
 		boolean flag=false;
@@ -23,6 +25,8 @@ public class Extract {
 		}
 		return flag;
 	}
+	
+	//base query extraction
 	public void extractBase(String arr1[],int l )
 	{
 		System.out.println("extractBase");	
@@ -35,6 +39,7 @@ public class Extract {
 				//
 		}
 	}
+	//filter extraction
 	public void extractFilter(String arr1[],int l )
 	{
 		System.out.println("extractFilter");	
@@ -50,7 +55,8 @@ public class Extract {
 				//
 		}
 	}
-	public void extractLogical(String arr1[],int l )
+	//Logical operation extraction
+	public ArrayList<Restrictions> extractLogical(String arr1[],int l )
 	{
 		System.out.println("\nextractLogical");	
 		int flag=100;
@@ -75,17 +81,18 @@ public class Extract {
 						res.setOperand2(arr1[i]);
 						al.add(res);
 						System.out.print(res.getOperand1()+"  "+res.getOperator()+" "+res.getOperand2());
-					
+						return al;
 				}
 				else
 					System.out.print("\n");
 			}
 				//
 		}
+		return null;
 	}
 	
-	
-	public void extractLogicalOperators(String arr1[],int l )
+	//Logical Operators
+	public ArrayList<LogicalOperators> extractLogicalOperators(String arr1[],int l )
 	{
 		System.out.println("\nextractLogicalOperators");	
 		int flag=100;
@@ -113,13 +120,15 @@ public class Extract {
 					operators.setOperator(arr1[i]);
 					al.add(operators);
 					System.out.print(operators.getOperator()+"  ");
+					return al;
 			}
 			}
 				//
 		}
+		return null;
 	}
-	
-	public void extractField(String arr1[],int l )
+	//Query Fields
+	public ArrayList<QueryParameterclass> extractField(String arr1[],int l )
 	{
 		ArrayList<QueryParameterclass> al= new ArrayList<QueryParameterclass>();
 		System.out.println("\nextractField");	
@@ -145,6 +154,7 @@ public class Extract {
 			//System.out.print(arr1[i]+"\n");
 				//
 		}
+		return al;
 	}
 	
 	public void extractOrderBy(String arr1[],int l )

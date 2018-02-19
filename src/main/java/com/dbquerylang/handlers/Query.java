@@ -15,8 +15,8 @@ public class Query {
 		// TODO Auto-generated method stub
 	ArrayList<IPLStats> al= new ArrayList<IPLStats>();
 	
-	//String csvFile="/home/mukyadav/Development/STS/Query/scr_file/ipl.csv"	;
-	String csvFile="/home/sapient/Desktop/STS/Query/src/main/resources/ipl.csv"	;
+	String csvFile="/home/mukyadav/Development/STS/Query/src/main/resources/ipl.csv"	;
+	//String csvFile="/home/sapient/Desktop/STS/Query/src/main/resources/ipl.csv"	;
 
 	String line="";
 	String cvsSplitBy="[,]";
@@ -110,31 +110,43 @@ public class Query {
 	
 		
 	final String WITH_DELIMITER = "((?<=%1$s)|(?=%1$s))";
-	String query="select id,avg(win_by_wickets),city ,min(win_by_runs) from ipl.csv where city<='Bangalore' and date='2018-02-14' order by id group by city";
+	String query="select id ,venue from ipl.csv where city='Bangalore' order by id group by city";
 	System.out.println(query);
-	
+	//for spllitting and keeping the delimiter
 	String arr[]=query.split(String.format(WITH_DELIMITER,"[,*<>=\\s]"));
 	int j=0,k=arr.length, diff=0;
 	String arr1[]=new String[k];
 	for(int i=0; i<arr.length;i++)
 	{
+		//for removing spaces from the array
 		if(arr[i].matches("[,<>\\s]")) {
 			diff++;
 			continue;}
 		arr1[j++]=arr[i];
 		
 	}
+	
+	//deciphering the query
 	Extract ex=new Extract();
 	boolean fileCheck=ex.extractFile(arr1,arr1.length-diff );
 	if(fileCheck) {
 	ex.extractBase(arr1,arr1.length-diff );
 	ex.extractFilter(arr1,arr1.length-diff );
-	ex.extractLogical(arr1,arr1.length-diff );
-	ex.extractLogicalOperators(arr1,arr1.length-diff );
-	ex.extractField(arr1,arr1.length-diff );
+	ArrayList<Restrictions> re=ex.extractLogical(arr1,arr1.length-diff );
+	ArrayList<LogicalOperators> or=ex.extractLogicalOperators(arr1,arr1.length-diff );
+	ArrayList<QueryParameterclass> paraList= ex.extractField(arr1,arr1.length-diff );
 	ex.extractOrderBy(arr1,arr1.length-diff );
 	ex.extractGroupBy(arr1,arr1.length-diff );
 	ex.extractAggregate(arr1,arr1.length-diff );
+	//executing the base 
+	Executor exec=new Executor();
+	exec.execute(paraList, al);
+	if(re!=null) {
+	//executing based on filter	
+	ExecuteLogical execL=new ExecuteLogical();
+	execL.executeLogical(paraList,re, or);
+	}
+	
 	}
 	for(int l=0; l<arr1.length-diff;l++)
 	{
