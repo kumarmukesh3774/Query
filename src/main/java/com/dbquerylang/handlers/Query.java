@@ -110,12 +110,13 @@ public class Query {
 		*/
 	final String WITH_DELIMITER = "((?<=%1$s)|(?=%1$s))";
 	System.out.println("Enter query");
-	Scanner sc = new Scanner(System.in);
-	String query= sc.nextLine();
+	//Scanner sc = new Scanner(System.in);
+	//String query= sc.nextLine();
 
-	sc.close();
-			
-
+	//sc.close();
+	String query="select avg(win_by_wickets),min(win_by_runs) from ipl.csv";
+	System.out.println(query);
+	
 	String arr[]=query.split(String.format(WITH_DELIMITER,"[,*<>=\\s]"));
 	int j=0,k=arr.length, diff=0;
 	String arr1[]=new String[k];
