@@ -15,8 +15,8 @@ public class Query {
 		// TODO Auto-generated method stub
 	ArrayList<IPLStats> al= new ArrayList<IPLStats>();
 	
-	//String csvFile="/home/mukyadav/Development/STS/Query/src/main/resources/ipl.csv"	;
-	String csvFile="/home/sapient/Desktop/STS/Query/src/main/resources/ipl.csv"	;
+	String csvFile="/home/mukyadav/Development/STS/Query/src/main/resources/ipl.csv"	;
+	//String csvFile="/home/sapient/Desktop/STS/Query/src/main/resources/ipl.csv"	;
 
 	String line="";
 	String cvsSplitBy="[,]";
@@ -111,7 +111,7 @@ public class Query {
 	
 		
 	final String WITH_DELIMITER = "((?<=%1$s)|(?=%1$s))";
-	String query="select id ,venue from ipl.csv where city<='Bangalore' order by id group by city";
+	String query="select id ,venue from ipl.csv where city='Bangalore' and id >= 250 order by id group by city";
 	System.out.println(query);
 	//for spllitting and keeping the delimiter
 	String arr[]=query.split(String.format(WITH_DELIMITER,"[,*!<>=\\s]"));
@@ -147,19 +147,19 @@ public class Query {
 	ex.extractAggregate(arr1,arr1.length-diff );
 	//executing the base 
 	Executor exec=new Executor();
-	exec.execute(paraList, al);
+	exec.execute(paraList, al,re,or);
 	if(re!=null) {
 	//executing based on filter	
 	ExecuteLogical execL=new ExecuteLogical();
-	execL.executeLogical(paraList,re, or);
+	//execL.executeLogical(paraList,re, or);
 	}
 	
 	}
-	for(int l=0; l<arr1.length-diff;l++)
+	/*for(int l=0; l<arr1.length-diff;l++)
 	{
 		System.out.println(arr1[l]);
 		
-	}
+	}*/
 	
 	
 	

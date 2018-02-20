@@ -60,7 +60,14 @@ public class Extract {
 	{
 		System.out.println("\nextractLogical");	
 		int flag=100;
+		ArrayList<Restrictions> al=null;
 		for(int i=0;i<l;i++) {
+			if(arr1[i].equalsIgnoreCase("Order")||
+					arr1[i].equalsIgnoreCase("group"))
+			{
+				
+				break;
+			}
 			if(arr1[i].equalsIgnoreCase("where"))
 			{
 			flag=i;;	
@@ -72,13 +79,17 @@ public class Extract {
 						arr1[i].equalsIgnoreCase("not")||
 						arr1[i].equalsIgnoreCase("&&")||
 						arr1[i].equalsIgnoreCase("||")||
-						arr1[i].equalsIgnoreCase("!")))
-				{
-					Restrictions res= new Restrictions();
-					ArrayList<Restrictions> al= new ArrayList<Restrictions>();
+						arr1[i].equalsIgnoreCase("!")
+						))		{
+					
+					
+						Restrictions res= new Restrictions();
+						al= new ArrayList<Restrictions>();
 						res.setOperand1(arr1[i++]);
 						//Code to be checked
-						if(arr1[i].contains("[<>!]")&&arr1[i+1].equals("=")) {
+						if((arr1[i].equals("<")&&arr1[i+1].equals("="))||
+								(arr1[i].equals(">")&&arr1[i+1].equals("="))||
+								(arr1[i].equals("!")&&arr1[i+1].equals("="))) {
 							
 							res.setOperator(arr1[i++]);
 							res.setOperator1(arr1[i++]);
@@ -87,18 +98,18 @@ public class Extract {
 						res.setOperator(arr1[i++]);
 						res.setOperand2(arr1[i]);
 						al.add(res);
-						if(res.getOperator1()==null)
-						System.out.print(res.getOperand1()+"  "+res.getOperator()+" "+res.getOperand2());
+						if(res.getOperator1().equals(""))
+						System.out.print(res.getOperand1()+" "+res.getOperator()+" "+res.getOperand2());
 						else
-							System.out.print(res.getOperand1()+"  "+res.getOperator()+" "+res.getOperator1()+" "+res.getOperand2());
-						return al;
+							System.out.print(res.getOperand1()+" "+res.getOperator()+res.getOperator1()+" "+res.getOperand2());
+						
 				}
 				else
 					System.out.print("\n");
 			}
 				//
 		}
-		return null;
+	 return al;
 	}
 	
 	//Logical Operators
