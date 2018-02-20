@@ -173,7 +173,7 @@ public class Extract {
 		}
 		return null;
 	}
-	public void extractGroupBy(String arr1[],int l )
+	public String extractGroupBy(String arr1[],int l )
 	{
 		System.out.println("extractGroupBy");
 		for(int i=0;i<l-1;i++) {
@@ -182,11 +182,11 @@ public class Extract {
 				GroupBy gr= new GroupBy();
 				gr.setGroupBy(arr1[i+2]);
 				System.out.println(gr.getGroupBy()+"  ");
-				
+				return gr.getGroupBy();
 			}
 				//
 		}
-		
+		return null;
 	}
 	public void extractAggregate(String arr1[],int l )
 	{

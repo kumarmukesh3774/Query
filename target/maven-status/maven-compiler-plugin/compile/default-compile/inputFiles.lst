@@ -1,0 +1,12 @@
+/home/sapient/Desktop/STS/Query/src/main/java/com/dbquerylang/handlers/Restrictions.java
+/home/sapient/Desktop/STS/Query/src/main/java/com/dbquerylang/handlers/Extract.java
+/home/sapient/Desktop/STS/Query/src/main/java/com/dbquerylang/handlers/ExecuteAggregate.java
+/home/sapient/Desktop/STS/Query/src/main/java/com/dbquerylang/handlers/LogicalOperators.java
+/home/sapient/Desktop/STS/Query/src/main/java/com/dbquerylang/handlers/AggregateFunctions.java
+/home/sapient/Desktop/STS/Query/src/main/java/com/dbquerylang/handlers/Executor.java
+/home/sapient/Desktop/STS/Query/src/main/java/com/dbquerylang/handlers/Query.java
+/home/sapient/Desktop/STS/Query/src/main/java/com/dbquerylang/handlers/QueryParameterclass.java
+/home/sapient/Desktop/STS/Query/src/main/java/com/dbquerylang/handlers/ExecuteLogical.java
+/home/sapient/Desktop/STS/Query/src/main/java/com/dbquerylang/handlers/IPLStats.java
+/home/sapient/Desktop/STS/Query/src/main/java/com/dbquerylang/handlers/OrderBy.java
+/home/sapient/Desktop/STS/Query/src/main/java/com/dbquerylang/handlers/GroupBy.java

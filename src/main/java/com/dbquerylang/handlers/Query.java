@@ -150,7 +150,7 @@ public class Query {
 	}
 	for(int l=0; l<arr1.length-diff;l++)
 	{
-		//System.out.println(arr1[l]);
+		System.out.println(arr1[l]);
 		
 	}
 	
