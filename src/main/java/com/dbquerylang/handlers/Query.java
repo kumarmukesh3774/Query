@@ -49,6 +49,7 @@ public class Query {
 					ipl.setWin_by_runs(match[11]);
 					ipl.setWin_by_wickets(match[12]);
 					ipl.setPlayer_of_match(match[13]);
+					//handling , in ""
 					if(match[14].contains("\""))
 					{	
 						
@@ -110,16 +111,22 @@ public class Query {
 	
 		
 	final String WITH_DELIMITER = "((?<=%1$s)|(?=%1$s))";
-	String query="select id ,venue from ipl.csv where city='Bangalore' order by id group by city";
+	String query="select id ,venue from ipl.csv where city<='Bangalore' order by id group by city";
 	System.out.println(query);
 	//for spllitting and keeping the delimiter
-	String arr[]=query.split(String.format(WITH_DELIMITER,"[,*<>=\\s]"));
+	String arr[]=query.split(String.format(WITH_DELIMITER,"[,*!<>=\\s]"));
 	int j=0,k=arr.length, diff=0;
 	String arr1[]=new String[k];
 	for(int i=0; i<arr.length;i++)
 	{
+		if(arr[i].contains("'")) {
+			arr[i]=arr[i].substring(1,arr[i].length()-1);
+			
+		}
+
+			
 		//for removing spaces from the array
-		if(arr[i].matches("[,<>\\s]")) {
+		if(arr[i].matches("[,\\s]")) {
 			diff++;
 			continue;}
 		arr1[j++]=arr[i];

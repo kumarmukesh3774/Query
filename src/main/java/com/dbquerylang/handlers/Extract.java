@@ -77,10 +77,20 @@ public class Extract {
 					Restrictions res= new Restrictions();
 					ArrayList<Restrictions> al= new ArrayList<Restrictions>();
 						res.setOperand1(arr1[i++]);
+						//Code to be checked
+						if(arr1[i].contains("[<>!]")&&arr1[i+1].equals("=")) {
+							
+							res.setOperator(arr1[i++]);
+							res.setOperator1(arr1[i++]);
+						}
+						else
 						res.setOperator(arr1[i++]);
 						res.setOperand2(arr1[i]);
 						al.add(res);
+						if(res.getOperator1()==null)
 						System.out.print(res.getOperand1()+"  "+res.getOperator()+" "+res.getOperand2());
+						else
+							System.out.print(res.getOperand1()+"  "+res.getOperator()+" "+res.getOperator1()+" "+res.getOperand2());
 						return al;
 				}
 				else
