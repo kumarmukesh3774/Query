@@ -157,7 +157,7 @@ public class Extract {
 		return al;
 	}
 	
-	public void extractOrderBy(String arr1[],int l )
+	public String extractOrderBy(String arr1[],int l )
 	{
 		System.out.println("extractOrderBy");
 		for(int i=0;i<l-1;i++) {
@@ -166,10 +166,12 @@ public class Extract {
 				OrderBy or= new OrderBy();
 				or.setOrderBy(arr1[i+2]);
 				System.out.println(or.getOrderBy()+"  ");
+				return or.getOrderBy();
 			}
 			
 				//
 		}
+		return null;
 	}
 	public void extractGroupBy(String arr1[],int l )
 	{
@@ -180,9 +182,11 @@ public class Extract {
 				GroupBy gr= new GroupBy();
 				gr.setGroupBy(arr1[i+2]);
 				System.out.println(gr.getGroupBy()+"  ");
+				
 			}
 				//
 		}
+		
 	}
 	public void extractAggregate(String arr1[],int l )
 	{

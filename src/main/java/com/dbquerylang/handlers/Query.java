@@ -15,8 +15,8 @@ public class Query {
 		// TODO Auto-generated method stub
 	ArrayList<IPLStats> al= new ArrayList<IPLStats>();
 	
-	String csvFile="/home/mukyadav/Development/STS/Query/src/main/resources/ipl.csv"	;
-	//String csvFile="/home/sapient/Desktop/STS/Query/src/main/resources/ipl.csv"	;
+	//String csvFile="/home/mukyadav/Development/STS/Query/src/main/resources/ipl.csv"	;
+	String csvFile="/home/sapient/Desktop/STS/Query/src/main/resources/ipl.csv"	;
 
 	String line="";
 	String cvsSplitBy="[,]";
