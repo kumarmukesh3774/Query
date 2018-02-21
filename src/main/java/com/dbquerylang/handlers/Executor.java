@@ -4,11 +4,69 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 public class Executor {
+	
+	public boolean verifyOperation(Restrictions operator,IPLStats ipl) {
+
+			if(operator.getOperator1().equals("="))
+			{
+				if(operator.getOperator().equals("<"))
+				{
+					
+					
+					//System.out.println("<===========<=================<==");
+				}
+				if(operator.getOperator().equals(">"))
+				{
+					//System.out.println(">===========>=================<==");
+
+					
+				}
+				if(operator.getOperator().equals("!"))
+				{
+					//System.out.println("!===========!=================<==");
+					
+				}
+			}
+			else if(operator.getOperator1().equals("")){
+				if(operator.getOperator().equals("<"))
+				{
+					//System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+					
+				}
+				if(operator.getOperator().equals(">"))
+				{
+					//System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+					
+				}
+				if(operator.getOperator().equals("!"))
+				{
+					//System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+					
+				}
+				if(operator.getOperator().equals("="))
+				{
+					//System.out.println("==============================");
+
+				}
+				
+			}
+			
+		
+	
+		
+		return false;
+		
+	}
+	
+	
+	
+	
+	
+	
 	
 	public void execute(ArrayList<QueryParameterclass> al,ArrayList<IPLStats> ipl,
 			ArrayList<Restrictions> res,ArrayList<LogicalOperators> or)
@@ -36,62 +94,24 @@ public class Executor {
 
 
 	
-		
+		ArrayList<Flags> flagAl=new ArrayList<Flags>();
 		
 		Iterator<IPLStats> itr1=ipl.iterator();
 		while(itr1.hasNext()) {
 
 			IPLStats ipls=itr1.next();
 			
-			
 			Iterator<Restrictions> itrR=res.iterator();
 			while(itrR.hasNext())
 			{
+				Flags fl=new Flags();
 				Restrictions operator=itrR.next();
-				if(operator.getOperator1().equals("="))
-				{
-					if(operator.getOperator().equals("<"))
-					{
-
-					}
-					if(operator.getOperator().equals(">"))
-					{
-						System.out.println("<===========<=================<==");
-
-						
-					}
-					if(operator.getOperator().equals("!"))
-					{
-						
-						
-					}
-				}
-				else if(operator.getOperator1()==null){
-					if(operator.getOperator().equals("<"))
-					{
-						
-						
-					}
-					if(operator.getOperator().equals(">"))
-					{
-						
-						
-					}
-					if(operator.getOperator().equals("!"))
-					{
-						
-						
-					}
-					if(operator.getOperator().equals("="))
-					{
-						System.out.println("==============================");
-	
-					}
-					
-				}
+				fl.setFlag(verifyOperation(operator,ipls));
+				flagAl.add(fl);
 				
 			}
-		
+			//if()
+
 			
 		Iterator<QueryParameterclass> itr3= al.iterator();
 		while(itr3.hasNext()) {
@@ -126,7 +146,7 @@ public class Executor {
 			id.add(ipls.getId());
 
 		}
-			obj.put("id", id);
+		
 
 		
 		 if(para.getPara().equalsIgnoreCase("city")) {
@@ -134,7 +154,7 @@ public class Executor {
 			city.add(ipls.getCity());
 
 			}
-			obj.put("city", city);	
+	
 			
 		
 		 if(para.getPara().equalsIgnoreCase("date")) {
@@ -142,7 +162,7 @@ public class Executor {
 			city.add(ipls.getDate());
 
 			}
-			obj.put("date", date);	
+	
 			
 		
 		if(para.getPara().equalsIgnoreCase("team1")) {
@@ -150,7 +170,7 @@ public class Executor {
 			team1.add(ipls.getTeam1());
 
 			}
-			obj.put("team1", team1);	
+			
 			
 		
 		
@@ -159,7 +179,7 @@ public class Executor {
 			team2.add(ipls.getTeam2());
 
 			}
-			obj.put("team2", team2);	
+		
 			
 		
 		
@@ -168,7 +188,7 @@ public class Executor {
 			toss_winner.add(ipls.getToss_winner());
 
 			}
-			obj.put("toss_winner", toss_winner);	
+	
 			
 		
 		 if(para.getPara().equalsIgnoreCase("toss_decision")) {
@@ -176,7 +196,7 @@ public class Executor {
 			toss_decision.add(ipls.getToss_decision());
 
 			}
-			obj.put("toss_decision", toss_decision);	
+	
 			
 		
 		 if(para.getPara().equalsIgnoreCase("result")) {
@@ -184,7 +204,7 @@ public class Executor {
 			result.add(ipls.getResult());
 
 			}
-			obj.put("result", result);	
+		
 			
 		
 		 if(para.getPara().equalsIgnoreCase("dl_applied")) {
@@ -192,7 +212,7 @@ public class Executor {
 			dl_applied.add(ipls.getDl_applied());
 
 			}
-			obj.put("dl_applied", dl_applied);	
+		
 			
 		
 		 if(para.getPara().equalsIgnoreCase("winner")) {
@@ -200,7 +220,7 @@ public class Executor {
 			winner.add(ipls.getWinner());
 
 			}
-			obj.put("winner", winner);	
+
 			
 		
 		 if(para.getPara().equalsIgnoreCase("win_by_runs")) {
@@ -208,14 +228,11 @@ public class Executor {
 			win_by_runs.add(ipls.getWin_by_runs());
 
 			}
-			obj.put("win_by_runs", win_by_runs);	
-			
 		
 		 if(para.getPara().equalsIgnoreCase("win_by_wickets")) {
 			win_by_wickets.add(ipls.getWin_by_wickets());
 
 			}
-			obj.put("win_by_wickets", win_by_wickets);	
 			
 		
 		 if(para.getPara().equalsIgnoreCase("player_of_match")) {
@@ -223,7 +240,7 @@ public class Executor {
 			player_of_match.add(ipls.getPlayer_of_match());
 
 			}
-			obj.put("player_of_match", player_of_match);	
+	
 			
 		
 		 if(para.getPara().equalsIgnoreCase("venue")) {
@@ -231,7 +248,7 @@ public class Executor {
 			venue.add(ipls.getVenue());
 
 			}
-			obj.put("venue", venue);	
+
 			
 		
 		 if(para.getPara().equalsIgnoreCase("umpire1")) {
@@ -239,15 +256,13 @@ public class Executor {
 			umpire1.add(ipls.getUmpire1());
 
 			}
-			obj.put("umpire1", umpire1);	
+
 			
 		
 		 if(para.getPara().equalsIgnoreCase("umpire2")) {
 
 			umpire2.add(ipls.getUmpire2());
-
-			
-			obj.put("umpire2", umpire2);	
+	
 			
 		}
 		

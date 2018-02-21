@@ -60,7 +60,7 @@ public class Extract {
 	{
 		System.out.println("\nextractLogical");	
 		int flag=100;
-		ArrayList<Restrictions> al=null;
+		ArrayList<Restrictions> al=al= new ArrayList<Restrictions>();;
 		for(int i=0;i<l;i++) {
 			if(arr1[i].equalsIgnoreCase("Order")||
 					arr1[i].equalsIgnoreCase("group"))
@@ -78,13 +78,12 @@ public class Extract {
 						arr1[i].equalsIgnoreCase("or")||
 						arr1[i].equalsIgnoreCase("not")||
 						arr1[i].equalsIgnoreCase("&&")||
-						arr1[i].equalsIgnoreCase("||")||
-						arr1[i].equalsIgnoreCase("!")
+						arr1[i].equalsIgnoreCase("||")
 						))		{
 					
 					
 						Restrictions res= new Restrictions();
-						al= new ArrayList<Restrictions>();
+						
 						res.setOperand1(arr1[i++]);
 						//Code to be checked
 						if((arr1[i].equals("<")&&arr1[i+1].equals("="))||
@@ -98,11 +97,13 @@ public class Extract {
 						res.setOperator(arr1[i++]);
 						res.setOperand2(arr1[i]);
 						al.add(res);
-						if(res.getOperator1().equals(""))
+						if(res.getOperator1().equals("")) {
+							
 						System.out.print(res.getOperand1()+" "+res.getOperator()+" "+res.getOperand2());
-						else
+						}else {
+					
 							System.out.print(res.getOperand1()+" "+res.getOperator()+res.getOperator1()+" "+res.getOperand2());
-						
+						}
 				}
 				else
 					System.out.print("\n");
@@ -117,6 +118,7 @@ public class Extract {
 	{
 		System.out.println("\nextractLogicalOperators");	
 		int flag=100;
+		ArrayList<LogicalOperators> al= new ArrayList<LogicalOperators>();
 		System.out.print("\n");
 		for(int i=0;i<l;i++) {
 			if(arr1[i].equalsIgnoreCase("where"))
@@ -125,28 +127,25 @@ public class Extract {
 			}
 			if(i>flag)
 			{
-				if(!(arr1[i].equalsIgnoreCase("and")||
-						arr1[i].equalsIgnoreCase("or")||
-						arr1[i].equalsIgnoreCase("not")||
-						arr1[i].equalsIgnoreCase("&&")||
-						arr1[i].equalsIgnoreCase("||")||
-						arr1[i].equalsIgnoreCase("!")))
+				if((arr1[i].equalsIgnoreCase("and")||
+						arr1[i].equalsIgnoreCase("or")))
 				{
 					//System.out.print(arr1[i]+"  ");
-				}
-				else
-				{
-					ArrayList<LogicalOperators> al= new ArrayList<LogicalOperators>();
 					LogicalOperators operators= new LogicalOperators();
 					operators.setOperator(arr1[i]);
 					al.add(operators);
 					System.out.print(operators.getOperator()+"  ");
-					return al;
+				}
+				else
+				{
+					
+					
+					//return al;
 			}
 			}
 				//
 		}
-		return null;
+		return al;
 	}
 	//Query Fields
 	public ArrayList<QueryParameterclass> extractField(String arr1[],int l )
