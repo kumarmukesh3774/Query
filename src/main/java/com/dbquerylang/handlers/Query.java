@@ -16,8 +16,8 @@ public class Query {
 		// TODO Auto-generated method stub
 	ArrayList<IPLStats> al= new ArrayList<IPLStats>();
 	
-	//String csvFile="/home/mukyadav/Development/STS/Query/src/main/resources/ipl.csv"	;
-	String csvFile="/home/sapient/Desktop/STS/Query/src/main/resources/ipl.csv"	;
+	String csvFile="/home/mukyadav/Development/STS/Query/src/main/resources/ipl.csv"	;
+	//String csvFile="/home/sapient/Desktop/STS/Query/src/main/resources/ipl.csv"	;
 
 	String line="";
 	String cvsSplitBy="[,]";
@@ -112,7 +112,7 @@ public class Query {
 	
 		
 	final String WITH_DELIMITER = "((?<=%1$s)|(?=%1$s))";
-	String query="select id  from ipl.csv where city <'Bangalore' and id <= 250 or city ='delhi' order by id group by city";
+	String query="select id  from ipl.csv where   city='Bangalore' or id <=200 order by id group by city";
 	System.out.println(query);
 	//for spllitting and keeping the delimiter
 	String arr[]=query.split(String.format(WITH_DELIMITER,"[,*!<>=\\s]"));

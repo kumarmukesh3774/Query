@@ -2,31 +2,132 @@ package com.dbquerylang.handlers;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.regex.Pattern;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 public class Executor {
 	
 	public boolean verifyOperation(Restrictions operator,IPLStats ipl) {
+			String value=null;
+			int valueInt=0;
+			Date date=null;
+			if(operator.getOperand1().equalsIgnoreCase("id")) {
+				
+				valueInt=ipl.getId();
 
+			}
+			if(operator.getOperand1().equalsIgnoreCase("city")) {
+				
+				value=ipl.getCity();
+
+			}
+			if(operator.getOperand1().equalsIgnoreCase("date")) {
+				
+				date=ipl.getDate();
+
+			}
+			if(operator.getOperand1().equalsIgnoreCase("team1")) {
+				
+				value=ipl.getTeam1();
+
+			}
+			if(operator.getOperand1().equalsIgnoreCase("team2")) {
+				
+				value=ipl.getTeam2();
+
+			}
+			if(operator.getOperand1().equalsIgnoreCase("toss_winner")) {
+				
+				value=ipl.getToss_winner();
+
+			}
+			if(operator.getOperand1().equalsIgnoreCase("toss_decision")) {
+				
+				value=ipl.getToss_decision();
+
+			}
+			if(operator.getOperand1().equalsIgnoreCase("result")) {
+				
+				value=ipl.getResult();
+
+			}
+			if(operator.getOperand1().equalsIgnoreCase("dl_applied")) {
+				
+				valueInt=ipl.getDl_applied();
+
+			}
+			if(operator.getOperand1().equalsIgnoreCase("winner")) {
+				
+				value=ipl.getWinner();
+
+			}
+			if(operator.getOperand1().equalsIgnoreCase("win_by_runs")) {
+				
+				valueInt=ipl.getWin_by_runs();
+
+			}
+			if(operator.getOperand1().equalsIgnoreCase("win_by_wickets")) {
+				
+				valueInt=ipl.getWin_by_wickets();
+
+			}
+			if(operator.getOperand1().equalsIgnoreCase("player_of_match")) {
+				
+				value=ipl.getPlayer_of_match();
+
+			}
+			if(operator.getOperand1().equalsIgnoreCase("venue")) {
+				
+				value=ipl.getVenue();
+
+			}
+			if(operator.getOperand1().equalsIgnoreCase("umpire1")) {
+				
+				value=ipl.getUmpire1();
+
+			}
+			if(operator.getOperand1().equalsIgnoreCase("umpire2")) {
+				
+				value=ipl.getUmpire2();
+
+			}
+			
+			
+
+			
+			
+			
+			
 			if(operator.getOperator1().equals("="))
 			{
 				if(operator.getOperator().equals("<"))
 				{
-					
+					if(valueInt<=Integer.valueOf(operator.getOperand2()))
+					return true;
+					return false;
 					
 					//System.out.println("<===========<=================<==");
 				}
 				if(operator.getOperator().equals(">"))
 				{
+					if(valueInt>=Integer.valueOf(operator.getOperand2()))
+					return true;
+					return false;
 					//System.out.println(">===========>=================<==");
 
 					
 				}
 				if(operator.getOperator().equals("!"))
 				{
+					//considering operand2 is m=integer only
+					if(valueInt!=Integer.valueOf(operator.getOperand2()))
+					return true;
+					return false;
 					//System.out.println("!===========!=================<==");
 					
 				}
@@ -34,30 +135,44 @@ public class Executor {
 			else if(operator.getOperator1().equals("")){
 				if(operator.getOperator().equals("<"))
 				{
+					if(valueInt<Integer.valueOf(operator.getOperand2()))
+						return true;
+						return false;
 					//System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
 					
 				}
 				if(operator.getOperator().equals(">"))
 				{
+					if(valueInt>Integer.valueOf(operator.getOperand2()))
+						return true;
+						return false;
 					//System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 					
 				}
 				if(operator.getOperator().equals("!"))
 				{
+					
 					//System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 					
 				}
 				if(operator.getOperator().equals("="))
 				{
+					if(Pattern.matches("[a-zA-Z]*", operator.getOperand2()))
+					{
+						if(value.equalsIgnoreCase(operator.getOperand2()))
+						{
+							return true;
+						}
+						return false;
+					}
+					if(valueInt == Integer.valueOf(operator.getOperand2()))
+						return true;
+						return false;
 					//System.out.println("==============================");
 
 				}
 				
 			}
-			
-		
-	
-		
 		return false;
 		
 	}
@@ -110,8 +225,54 @@ public class Executor {
 				flagAl.add(fl);
 				
 			}
-			//if()
-
+			Iterator<Flags> itrf=flagAl.iterator();
+			Iterator<LogicalOperators> itrLo=or.iterator();
+			boolean finalFlag=false;
+			while(itrf.hasNext())
+			{//To be handled
+				finalFlag=itrf.next().getFlag();
+				while(itrLo.hasNext()) {
+				LogicalOperators op=itrLo.next();
+				 itrf.next();
+				if(finalFlag==true&&op.getOperator().equalsIgnoreCase("and")) {
+					
+					if(itrf.next().getFlag()==true)
+					{
+						finalFlag=true;
+					}
+					else {
+						finalFlag=false;
+					}
+				}else if(finalFlag==false&&op.getOperator().equalsIgnoreCase("and")) {
+					
+						itrf.next();
+						finalFlag=false;
+					}
+				else if(finalFlag==true&&op.getOperator().equalsIgnoreCase("or")) {
+					
+						itrf.next();
+						finalFlag=true;
+					}
+				else if(finalFlag==false&&op.getOperator().equalsIgnoreCase("or")) {
+					
+					if(itrf.next().getFlag()==true)
+					{
+						finalFlag=true;
+					}
+					else {
+						finalFlag=false;
+					}
+				}
+				}
+				
+				
+				
+				
+				}
+					
+				
+			//}
+			if(finalFlag) {
 			
 		Iterator<QueryParameterclass> itr3= al.iterator();
 		while(itr3.hasNext()) {
@@ -268,7 +429,7 @@ public class Executor {
 		
 		
 		}
-		}
+		//}
 		
 		
 		
@@ -413,6 +574,8 @@ public class Executor {
 		 	}
 		
 		
+		}
+			}
 		}
 
 		
