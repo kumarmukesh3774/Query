@@ -212,17 +212,22 @@ public class Executor {
 		ArrayList<Flags> flagAl=new ArrayList<Flags>();
 		
 		Iterator<IPLStats> itr1=ipl.iterator();
+		int i=0;
 		while(itr1.hasNext()) {
 
 			IPLStats ipls=itr1.next();
+			//System.out.println("======================================");
 			
 			Iterator<Restrictions> itrR=res.iterator();
+			
 			while(itrR.hasNext())
 			{
 				Flags fl=new Flags();
 				Restrictions operator=itrR.next();
 				fl.setFlag(verifyOperation(operator,ipls));
 				flagAl.add(fl);
+				//System.out.println(fl.getFlag()+" "+i++);
+			
 				
 			}
 			Iterator<Flags> itrf=flagAl.iterator();
@@ -231,31 +236,36 @@ public class Executor {
 			while(itrf.hasNext())
 			{//To be handled
 				finalFlag=itrf.next().getFlag();
+				//System.out.println("Flag "+finalFlag);
 				while(itrLo.hasNext()) {
 				LogicalOperators op=itrLo.next();
+				if(itrf.hasNext())
 				 itrf.next();
+				
 				if(finalFlag==true&&op.getOperator().equalsIgnoreCase("and")) {
 					
-					if(itrf.next().getFlag()==true)
+					
+					if(itrf.hasNext()&&itrf.next().getFlag()==true)
 					{
 						finalFlag=true;
+						
 					}
 					else {
 						finalFlag=false;
 					}
 				}else if(finalFlag==false&&op.getOperator().equalsIgnoreCase("and")) {
-					
+					if(itrf.hasNext())
 						itrf.next();
 						finalFlag=false;
 					}
 				else if(finalFlag==true&&op.getOperator().equalsIgnoreCase("or")) {
-					
+					if(itrf.hasNext())
 						itrf.next();
 						finalFlag=true;
 					}
 				else if(finalFlag==false&&op.getOperator().equalsIgnoreCase("or")) {
 					
-					if(itrf.next().getFlag()==true)
+					if(itrf.hasNext()&&itrf.next().getFlag()==true)
 					{
 						finalFlag=true;
 					}
@@ -263,14 +273,15 @@ public class Executor {
 						finalFlag=false;
 					}
 				}
+				
 				}
 				
-				
+				System.out.println(finalFlag+"=============");
 				
 				
 				}
 					
-				
+			
 			//}
 			if(finalFlag) {
 			
@@ -303,7 +314,7 @@ public class Executor {
 
 		}
 		if(para.getPara().equalsIgnoreCase("id")) {
-			
+
 			id.add(ipls.getId());
 
 		}
