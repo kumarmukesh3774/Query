@@ -4,7 +4,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.EmptyStackException;
 import java.util.Iterator;
+import java.util.Stack;
 import java.util.regex.Pattern;
 
 import org.json.simple.parser.JSONParser;
@@ -17,7 +19,7 @@ import org.json.simple.JSONObject;
 
 public class Executor {
 	
-	public boolean verifyOperation(Restrictions operator,IPLStats ipl) {
+	public int verifyOperation(Restrictions operator,IPLStats ipl) {
 			String value=null;
 			int valueInt=0;
 			Date date=null;
@@ -113,16 +115,16 @@ public class Executor {
 				if(operator.getOperator().equals("<"))
 				{
 					if(valueInt<=Integer.valueOf(operator.getOperand2()))
-					return true;
-					return false;
+					return 1;
+					return 0;
 					
 					//System.out.println("<===========<=================<==");
 				}
 				if(operator.getOperator().equals(">"))
 				{
 					if(valueInt>=Integer.valueOf(operator.getOperand2()))
-					return true;
-					return false;
+					return 1;
+					return 0;
 					//System.out.println(">===========>=================<==");
 
 					
@@ -131,8 +133,8 @@ public class Executor {
 				{
 					//considering operand2 is m=integer only
 					if(valueInt!=Integer.valueOf(operator.getOperand2()))
-					return true;
-					return false;
+					return 1;
+					return 0;
 					//System.out.println("!===========!=================<==");
 					
 				}
@@ -141,16 +143,16 @@ public class Executor {
 				if(operator.getOperator().equals("<"))
 				{
 					if(valueInt<Integer.valueOf(operator.getOperand2()))
-						return true;
-						return false;
+						return 1;
+						return 0;
 					//System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
 					
 				}
 				if(operator.getOperator().equals(">"))
 				{
 					if(valueInt>Integer.valueOf(operator.getOperand2()))
-						return true;
-						return false;
+						return 1;
+						return 0;
 					//System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 					
 				}
@@ -166,19 +168,19 @@ public class Executor {
 					{
 						if(value.equalsIgnoreCase(operator.getOperand2()))
 						{
-							return true;
+							return 1;
 						}
-						return false;
+						return 0;
 					}
 					if(valueInt == Integer.valueOf(operator.getOperand2()))
-						return true;
-						return false;
+						return 1;
+						return 0;
 					//System.out.println("==============================");
 
 				}
 				
 			}
-		return false;
+		return 0;
 		
 	}
 	
@@ -212,32 +214,102 @@ public class Executor {
 		
 			
 
-
+			Stack st = new Stack();
 	
 		ArrayList<Flags> flagAl=new ArrayList<Flags>();
 		
 		Iterator<IPLStats> itr1=ipl.iterator();
 		int i=0;
+		int finalFlag=0;
 		while(itr1.hasNext()) {
 
 			IPLStats ipls=itr1.next();
 			//System.out.println("======================================");
-			
+			Iterator<LogicalOperators> itrLo=or.iterator();
+
 			Iterator<Restrictions> itrR=res.iterator();
-			
+			Restrictions operator=null;
 			while(itrR.hasNext())
 			{
-				Flags fl=new Flags();
+				/*Flags fl=new Flags();
 				Restrictions operator=itrR.next();
 				fl.setFlag(verifyOperation(operator,ipls));
-				flagAl.add(fl);
+				flagAl.add(fl);*/
+				
+				operator=itrR.next();
+				int fl=verifyOperation(operator,ipls);
+				
+				st.push(new Integer(fl));
+				//System.out.println(st.peek());
+				if(itrLo.hasNext()) {
+					LogicalOperators lop=itrLo.next();
+					//System.out.println(itrLo.next().getOperator().equalsIgnoreCase("and"));
+				if(lop.getOperator().equalsIgnoreCase("and")) {
+					st.push(new Integer(2));
+					//System.out.println(st.peek());	
+				}
+				else if(lop.getOperator().equalsIgnoreCase("or")) {
+					st.push(new Integer(-2));
+					//System.out.println(st.peek());
+				}
+				}
+				//System.out.println(st.peek());
+				
 				//System.out.println(fl.getFlag()+" "+i++);
 			
 				
 			}
-			Iterator<Flags> itrf=flagAl.iterator();
+			while(!st.isEmpty()) {
+				//System.out.println((Integer)st.pop());
+				try{
+					int log=0;
+					int flag1Int=(Integer)st.pop();
+					boolean flag1=(flag1Int==1)?true:false;
+					if(!st.isEmpty()) {
+						log=(Integer)st.pop();
+						System.out.println(st.peek());	
+					}
+					else {
+						finalFlag=flag1Int;
+					}
+					
+					if(log==2 && !st.isEmpty()) {
+					boolean flag2=((Integer)st.pop()==1)?true:false;
+					System.out.println(st.peek());
+					if(flag1&&flag2) {
+						finalFlag=1;
+					}
+					else {
+						finalFlag=0;
+					}
+						
+				}
+				if(log==-2 &&!st.isEmpty()) {
+					boolean flag2=((Integer)st.pop()==1)?true:false;
+					System.out.println(st.peek());
+					if(flag1||flag2) {
+						finalFlag=1;
+					}
+					else {
+						finalFlag=0;
+					}
+						
+				}
+				//System.out.println(finalFlag);
+				if(!st.isEmpty()) {
+				st.push(new Integer(finalFlag));
+				System.out.println(st.peek());
+				}
+			}catch(EmptyStackException e){
+				
+				System.out.println("Empty Stack");
+			}
+				
+			}
+				
+			/*Iterator<Flags> itrf=flagAl.iterator();
 			Iterator<LogicalOperators> itrLo=or.iterator();
-			boolean finalFlag=false;
+			int finalFlag=0;
 			while(itrf.hasNext())
 			{//To be handled
 				finalFlag=itrf.next().getFlag();
@@ -246,11 +318,11 @@ public class Executor {
 				LogicalOperators op=itrLo.next();
 				if(itrf.hasNext())
 				 itrf.next();
-				
-				if(finalFlag==true&&op.getOperator().equalsIgnoreCase("and")) {
+				System.out.println(finalFlag+" "+op.getOperator());
+				if(finalFlag==1&&op.getOperator().equalsIgnoreCase("and")) {
 					
 					
-					if(itrf.hasNext()&&itrf.next().getFlag()==true)
+					if(itrf.hasNext()&&itrf.next().getFlag()==1)
 					{
 						finalFlag=true;
 						
@@ -281,14 +353,14 @@ public class Executor {
 				
 				}
 				
-				System.out.println(finalFlag+"=============");
 				
 				
-				}
+				}*/
 					
 			
 			//}
-			if(finalFlag) {
+			
+			if(finalFlag==1) {
 			
 		Iterator<QueryParameterclass> itr3= al.iterator();
 		while(itr3.hasNext()) {

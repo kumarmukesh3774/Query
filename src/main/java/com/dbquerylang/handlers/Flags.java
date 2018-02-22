@@ -1,13 +1,13 @@
 package com.dbquerylang.handlers;
 
 public class Flags {
-	boolean flag=false;
+	int flag=0;
 
-	public boolean getFlag() {
+	public int getFlag() {
 		return flag;
 	}
 
-	public void setFlag(boolean flag) {
+	public void setFlag(int flag) {
 		this.flag = flag;
 	}
 
