@@ -110,42 +110,58 @@ public class Query {
 		
 	}*/
 	
-		
+																							//issue in win_by_runs		
 	final String WITH_DELIMITER = "((?<=%1$s)|(?=%1$s))";
-	String query="select id  from ipl.csv where  city ='Bangalore' and id <=20  order by id group by city";
+	String query="select * from ipl.csv where  city ='Bangalore' and id <=20  order by id group by city";
 	System.out.println(query);
 	//for spllitting and keeping the delimiter
-	String arr[]=query.split(String.format(WITH_DELIMITER,"[,*!<>=\\s]"));
+	String arr[]=query.split(String.format(WITH_DELIMITER,"[,'*!<>=\\s]"));
 	int j=0,k=arr.length, diff=0;
 	String arr1[]=new String[k];
 	for(int i=0; i<arr.length;i++)
 	{
-		if(arr[i].contains("'")) {
+		/*if(arr[i].contains("'")) {
 			arr[i]=arr[i].substring(1,arr[i].length()-1);
 			
-		}
-
+		}*/
 			
 		//for removing spaces from the array
-		if(arr[i].matches("[,\\s]")) {
+		if(arr[i].matches("[',\\s]")) {
 			diff++;
-			continue;}
+			continue;
+			}
+		
 		arr1[j++]=arr[i];
+		/*if(arr1[j-1].contains("=")) {
+			int l=j;
+			while(!(arr1[l].equalsIgnoreCase("and")||
+					arr1[l].equalsIgnoreCase("or")||
+					arr1[l].equalsIgnoreCase("order")||
+					arr1[l].equalsIgnoreCase("group"))) {
+			arr1[j]=arr1[j]+" "+arr1[l++]+" ";
+			diff++;
+			}
+		}*/
 		
 	}
 	
 	//deciphering the query
+	ArrayList<Restrictions> re=null;
+	ArrayList<LogicalOperators> or=null;
+	
 	Extract ex=new Extract();
 	boolean fileCheck=ex.extractFile(arr1,arr1.length-diff );
 	if(fileCheck) {
 	ex.extractBase(arr1,arr1.length-diff );
-	ex.extractFilter(arr1,arr1.length-diff );
-	ArrayList<Restrictions> re=ex.extractLogical(arr1,arr1.length-diff );
-	ArrayList<LogicalOperators> or=ex.extractLogicalOperators(arr1,arr1.length-diff );
+	boolean flag=ex.extractFilter(arr1,arr1.length-diff );
 	ArrayList<QueryParameterclass> paraList= ex.extractField(arr1,arr1.length-diff );
+	if(flag) {
+	 re=ex.extractLogical(arr1,arr1.length-diff );
+	 or=ex.extractLogicalOperators(arr1,arr1.length-diff );
+	
 	ex.extractOrderBy(arr1,arr1.length-diff );
 	ex.extractGroupBy(arr1,arr1.length-diff );
-	ex.extractAggregate(arr1,arr1.length-diff );
+	ex.extractAggregate(arr1,arr1.length-diff );}
 	//executing the base 
 	Executor exec=new Executor();
 	exec.execute(paraList, al,re,or);

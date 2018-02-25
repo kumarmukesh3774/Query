@@ -40,27 +40,34 @@ public class Extract {
 		}
 	}
 	//filter extraction
-	public void extractFilter(String arr1[],int l )
+	public boolean extractFilter(String arr1[],int l )
 	{
 		System.out.println("extractFilter");	
 		int flag=100;
+		boolean flag1=false;
 		System.out.print("\n");
 		for(int i=0;i<l;i++) {
 			if(arr1[i].equalsIgnoreCase("where"))
 			{
-			flag=i;;	
+			flag=i;	
 			}
-			if(i>flag)
+			if(i>flag) {
 			System.out.print(arr1[i]+"  ");
+			flag1=true;
+			}
 				//
 		}
+		
+		return flag1;
+		
 	}
 	//Logical operation extraction
 	public ArrayList<Restrictions> extractLogical(String arr1[],int l )
 	{
 		System.out.println("\nextractLogical");	
 		int flag=100;
-		ArrayList<Restrictions> al=al= new ArrayList<Restrictions>();;
+		String s="";
+		ArrayList<Restrictions> al=new ArrayList<Restrictions>();
 		for(int i=0;i<l;i++) {
 			if(arr1[i].equalsIgnoreCase("Order")||
 					arr1[i].equalsIgnoreCase("group"))
@@ -87,15 +94,23 @@ public class Extract {
 						res.setOperand1(arr1[i++]);
 						//Code to be checked
 						if((arr1[i].equals("<")&&arr1[i+1].equals("="))||
-								(arr1[i].equals(">")&&arr1[i+1].equals("="))||
-								(arr1[i].equals("!")&&arr1[i+1].equals("="))) {
+						   (arr1[i].equals(">")&&arr1[i+1].equals("="))||
+						   (arr1[i].equals("!")&&arr1[i+1].equals("="))) {
 							
 							res.setOperator(arr1[i++]);
 							res.setOperator1(arr1[i++]);
 						}
 						else
 						res.setOperator(arr1[i++]);
-						res.setOperand2(arr1[i]);
+						s=arr1[i];
+						while(!(arr1[i+1].equalsIgnoreCase("and")||arr1[i+1].equalsIgnoreCase("or")||
+								arr1[i+1].equalsIgnoreCase("order")||arr1[i+1].equalsIgnoreCase("group"))) {
+							i++;
+						s=s+" "+arr1[i];
+						}
+					
+						res.setOperand2(s);
+						
 						al.add(res);
 						if(res.getOperator1().equals("")) {
 							
@@ -134,7 +149,7 @@ public class Extract {
 					LogicalOperators operators= new LogicalOperators();
 					operators.setOperator(arr1[i]);
 					al.add(operators);
-					System.out.print(operators.getOperator()+"  ");
+					System.out.println(operators.getOperator()+"  ");
 				}
 				else
 				{

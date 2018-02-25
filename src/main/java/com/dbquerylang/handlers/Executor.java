@@ -164,7 +164,8 @@ public class Executor {
 				}
 				if(operator.getOperator().equals("="))
 				{
-					if(Pattern.matches("[a-zA-Z]*", operator.getOperand2()))
+					
+					if(Pattern.matches("[a-zA-Z]*", operator.getOperand2().substring(0, 2)))
 					{
 						if(value.equalsIgnoreCase(operator.getOperand2()))
 						{
@@ -193,7 +194,18 @@ public class Executor {
 	public void execute(ArrayList<QueryParameterclass> al,ArrayList<IPLStats> ipl,
 			ArrayList<Restrictions> res,ArrayList<LogicalOperators> or)
 	{
-		JSONObject obj = new JSONObject();
+		
+        try {
+        	FileWriter file = new FileWriter("test.json");
+
+          
+            file.flush();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+		
+		/*JSONObject obj = new JSONObject();
 
 			JSONArray id = new JSONArray();
 			JSONArray city = new JSONArray();
@@ -210,7 +222,7 @@ public class Executor {
 			JSONArray player_of_match = new JSONArray();
 			JSONArray venue = new JSONArray();
 			JSONArray umpire1 = new JSONArray();
-			JSONArray umpire2 = new JSONArray();
+			JSONArray umpire2 = new JSONArray();*/
 		
 			
 
@@ -229,6 +241,7 @@ public class Executor {
 
 			Iterator<Restrictions> itrR=res.iterator();
 			Restrictions operator=null;
+			//creating a stack of logical operators and operands of the conditions
 			while(itrR.hasNext())
 			{
 				/*Flags fl=new Flags();
@@ -259,23 +272,28 @@ public class Executor {
 			
 				
 			}
-			while(!st.isEmpty()) {
+			//System.out.println("===================================="+st.empty());
+			while(!st.empty()) {
 				//System.out.println((Integer)st.pop());
 				try{
 					int log=0;
 					int flag1Int=(Integer)st.pop();
 					boolean flag1=(flag1Int==1)?true:false;
-					if(!st.isEmpty()) {
-						log=(Integer)st.pop();
-						System.out.println(st.peek());	
-					}
-					else {
-						finalFlag=flag1Int;
+					//System.out.println(st.empty());
+
+					if(st.empty())
+					{
+						break;
 					}
 					
-					if(log==2 && !st.isEmpty()) {
+						log=(Integer)st.pop();
+						//System.out.println(st.peek());	
+				
+			
+					
+				if(log==2 ) {
 					boolean flag2=((Integer)st.pop()==1)?true:false;
-					System.out.println(st.peek());
+					//System.out.println(st.peek());
 					if(flag1&&flag2) {
 						finalFlag=1;
 					}
@@ -284,9 +302,9 @@ public class Executor {
 					}
 						
 				}
-				if(log==-2 &&!st.isEmpty()) {
+				if(log==-2 ) {
 					boolean flag2=((Integer)st.pop()==1)?true:false;
-					System.out.println(st.peek());
+					//System.out.println(st.peek());
 					if(flag1||flag2) {
 						finalFlag=1;
 					}
@@ -296,16 +314,22 @@ public class Executor {
 						
 				}
 				//System.out.println(finalFlag);
-				if(!st.isEmpty()) {
-				st.push(new Integer(finalFlag));
-				System.out.println(st.peek());
+				//System.out.println(st.empty());
+
+				if(st.empty()) {
+					break;
 				}
+				st.push(new Integer(finalFlag));
+				//System.out.println(st.peek());
+
+
 			}catch(EmptyStackException e){
 				
 				System.out.println("Empty Stack");
 			}
 				
 			}
+			//System.out.println(finalFlag+"<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"+ i++);
 				
 			/*Iterator<Flags> itrf=flagAl.iterator();
 			Iterator<LogicalOperators> itrLo=or.iterator();
@@ -361,46 +385,46 @@ public class Executor {
 			//}
 			
 			if(finalFlag==1) {
-			
+				JSONObject obj=obj = new JSONObject();
+				
 		Iterator<QueryParameterclass> itr3= al.iterator();
 		while(itr3.hasNext()) {
-			
+			 
 			QueryParameterclass para=itr3.next();
 		if(para.getPara().equals("*"))
 		{	
 			
 			
-			id.add(ipls.getId());
-			city.add(ipls.getCity());
-			date.add(ipls.getDate());
-			team1.add(ipls.getTeam1());
-			team2.add(ipls.getTeam2());
-			toss_winner.add(ipls.getToss_winner());
-			toss_decision.add(ipls.getToss_decision());
-			result.add(ipls.getResult());
-			dl_applied.add(ipls.getDl_applied());
-			winner.add(ipls.getWinner());
-			win_by_runs.add(ipls.getWin_by_runs());
-			win_by_wickets.add(ipls.getWin_by_wickets());
-			player_of_match.add(ipls.getPlayer_of_match());
-			venue.add(ipls.getVenue());
-			umpire1.add(ipls.getUmpire1());
-			umpire2.add(ipls.getUmpire2());
+			obj.put("id",ipls.getId());
+			obj.put("city",ipls.getCity());
+			obj.put("date",ipls.getDate());
+			obj.put("team1",ipls.getTeam1());
+			obj.put("team2",ipls.getTeam2());
+			obj.put("toss_winner", ipls.getToss_winner());
+			obj.put("toss_decision", ipls.getToss_decision());
+			obj.put("result", ipls.getResult());	
+			obj.put("dl_applied", ipls.getDl_applied());
+			obj.put("winner", ipls.getWinner());
+			obj.put("win_by_runs", ipls.getWin_by_runs());
+			obj.put("win_by_wickets", ipls.getWin_by_wickets());
+			obj.put("player_of_match", ipls.getPlayer_of_match());
+			obj.put("venue", ipls.getVenue());
+			obj.put("umpire1", ipls.getUmpire1());
+			obj.put("umpire2", ipls.getUmpire2());
 
 
 
 		}
 		if(para.getPara().equalsIgnoreCase("id")) {
 
-			id.add(ipls.getId());
-
+			obj.put("id",ipls.getId());
 		}
 		
 
 		
 		 if(para.getPara().equalsIgnoreCase("city")) {
 			
-			city.add(ipls.getCity());
+				obj.put("city",ipls.getCity());
 
 			}
 	
@@ -408,7 +432,7 @@ public class Executor {
 		
 		 if(para.getPara().equalsIgnoreCase("date")) {
 	
-			city.add(ipls.getDate());
+				obj.put("date",ipls.getDate());
 
 			}
 	
@@ -416,16 +440,17 @@ public class Executor {
 		
 		if(para.getPara().equalsIgnoreCase("team1")) {
 		
-			team1.add(ipls.getTeam1());
 
-			}
-			
+			obj.put("team1",ipls.getTeam1());
+
+		}	
 			
 		
 		
 		 if(para.getPara().equalsIgnoreCase("team2")) {
 
-			team2.add(ipls.getTeam2());
+
+				obj.put("team2",ipls.getTeam2());
 
 			}
 		
@@ -434,7 +459,7 @@ public class Executor {
 		
 		 if(para.getPara().equalsIgnoreCase("toss_winner")) {
 	
-			toss_winner.add(ipls.getToss_winner());
+				obj.put("toss_winner", ipls.getToss_winner());
 
 			}
 	
@@ -442,7 +467,7 @@ public class Executor {
 		
 		 if(para.getPara().equalsIgnoreCase("toss_decision")) {
 	
-			toss_decision.add(ipls.getToss_decision());
+				obj.put("toss_decision", ipls.getToss_decision());
 
 			}
 	
@@ -450,7 +475,7 @@ public class Executor {
 		
 		 if(para.getPara().equalsIgnoreCase("result")) {
 
-			result.add(ipls.getResult());
+				obj.put("result", ipls.getResult());	
 
 			}
 		
@@ -458,35 +483,33 @@ public class Executor {
 		
 		 if(para.getPara().equalsIgnoreCase("dl_applied")) {
 
-			dl_applied.add(ipls.getDl_applied());
+				obj.put("dl_applied", ipls.getDl_applied());
 
-			}
 		
-			
+		 }
 		
 		 if(para.getPara().equalsIgnoreCase("winner")) {
 
-			winner.add(ipls.getWinner());
-
+				obj.put("winner", ipls.getWinner());
+			
 			}
 
 			
 		
 		 if(para.getPara().equalsIgnoreCase("win_by_runs")) {
 
-			win_by_runs.add(ipls.getWin_by_runs());
-
+				obj.put("win_by_runs", ipls.getWin_by_runs());
 			}
 		
 		 if(para.getPara().equalsIgnoreCase("win_by_wickets")) {
-			win_by_wickets.add(ipls.getWin_by_wickets());
+				obj.put("win_by_wickets", ipls.getWin_by_wickets());
 
 			}
 			
 		
 		 if(para.getPara().equalsIgnoreCase("player_of_match")) {
 
-			player_of_match.add(ipls.getPlayer_of_match());
+				obj.put("player_of_match", ipls.getPlayer_of_match());
 
 			}
 	
@@ -494,7 +517,7 @@ public class Executor {
 		
 		 if(para.getPara().equalsIgnoreCase("venue")) {
 
-			venue.add(ipls.getVenue());
+				obj.put("venue", ipls.getVenue());
 
 			}
 
@@ -502,28 +525,41 @@ public class Executor {
 		
 		 if(para.getPara().equalsIgnoreCase("umpire1")) {
 
-			umpire1.add(ipls.getUmpire1());
-
+				obj.put("umpire1", ipls.getUmpire1());
+		
 			}
 
 			
 		
 		 if(para.getPara().equalsIgnoreCase("umpire2")) {
 
-			umpire2.add(ipls.getUmpire2());
-	
+				obj.put("umpire2", ipls.getUmpire2());	
 			
 		}
+
 		
 		
 		}
+        try {
+        	FileWriter file = new FileWriter("test.json",true);
+
+            file.write(obj.toJSONString()+"\n");
+            file.flush();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+		
+		
+		
+		
 		//}
 		
 		
 		
 		
 		
-		Iterator<QueryParameterclass> itr2= al.iterator();
+		/*Iterator<QueryParameterclass> itr2= al.iterator();
 		while(itr2.hasNext()) {
 			
 			QueryParameterclass para=itr2.next();
@@ -662,20 +698,12 @@ public class Executor {
 		 	}
 		
 		
-		}
+		}*/
 			}
 		}
 
 		
-        try {
-        	FileWriter file = new FileWriter("test.json");
 
-            file.write(obj.toJSONString());
-            file.flush();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 		
 	}
 	

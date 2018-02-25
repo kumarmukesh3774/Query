@@ -21,13 +21,17 @@ public class ExecuteLogical {
             Object obj = parser.parse(new FileReader("test.json"));
 
             jsonObject = (JSONObject) obj;
+           
             Iterator<QueryParameterclass> itr=al.iterator();
             while(itr.hasNext()) {
-            JSONArray operand1 = (JSONArray) jsonObject.get(itr.next().getPara());
-            Iterator iterator = operand1.iterator();
+            	String s=itr.next().getPara();
+            JSONArray operand = (JSONArray)jsonObject.get(s);
+            
+            Iterator iterator = operand.iterator();
+            System.out.println("\n==============="+s+"===============\n");
             while(iterator.hasNext()) {
             	
-            	System.out.println(iterator.next());
+            	System.out.println(String.format("%.40s   ", iterator.next()));;
             }
             	
             }

@@ -4,7 +4,7 @@ public class Restrictions {
 	String operand1;
 	String operator="";
 	String operator1="";
-	String operand2;
+	String operand2="";
 	public String getOperand1() {
 		return operand1;
 	}
