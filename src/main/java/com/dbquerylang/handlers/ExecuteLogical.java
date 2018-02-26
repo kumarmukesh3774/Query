@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.function.Function;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -21,7 +22,8 @@ public class ExecuteLogical {
             Object obj = parser.parse(new FileReader("test.json"));
 
             jsonObject = (JSONObject) obj;
-           
+            
+
             Iterator<QueryParameterclass> itr=al.iterator();
             while(itr.hasNext()) {
             	String s=itr.next().getPara();

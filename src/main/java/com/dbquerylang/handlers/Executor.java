@@ -204,7 +204,7 @@ public class Executor {
         } catch (IOException e) {
             e.printStackTrace();
         }
-		
+        JSONArray match = new JSONArray();
 		/*JSONObject obj = new JSONObject();
 
 			JSONArray id = new JSONArray();
@@ -227,6 +227,17 @@ public class Executor {
 			
 
 			Stack st = new Stack();
+			
+			System.out.println("\n");
+			Iterator<QueryParameterclass> it= al.iterator();
+			while(it.hasNext()) {
+				 
+				QueryParameterclass para=it.next();
+				System.out.print(String.format("%2.40s      ", para.getPara()));
+				
+			}
+				System.out.println("\n");
+			
 	
 		ArrayList<Flags> flagAl=new ArrayList<Flags>();
 		
@@ -331,55 +342,6 @@ public class Executor {
 			}
 			//System.out.println(finalFlag+"<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"+ i++);
 				
-			/*Iterator<Flags> itrf=flagAl.iterator();
-			Iterator<LogicalOperators> itrLo=or.iterator();
-			int finalFlag=0;
-			while(itrf.hasNext())
-			{//To be handled
-				finalFlag=itrf.next().getFlag();
-				//System.out.println("Flag "+finalFlag);
-				while(itrLo.hasNext()) {
-				LogicalOperators op=itrLo.next();
-				if(itrf.hasNext())
-				 itrf.next();
-				System.out.println(finalFlag+" "+op.getOperator());
-				if(finalFlag==1&&op.getOperator().equalsIgnoreCase("and")) {
-					
-					
-					if(itrf.hasNext()&&itrf.next().getFlag()==1)
-					{
-						finalFlag=true;
-						
-					}
-					else {
-						finalFlag=false;
-					}
-				}else if(finalFlag==false&&op.getOperator().equalsIgnoreCase("and")) {
-					if(itrf.hasNext())
-						itrf.next();
-						finalFlag=false;
-					}
-				else if(finalFlag==true&&op.getOperator().equalsIgnoreCase("or")) {
-					if(itrf.hasNext())
-						itrf.next();
-						finalFlag=true;
-					}
-				else if(finalFlag==false&&op.getOperator().equalsIgnoreCase("or")) {
-					
-					if(itrf.hasNext()&&itrf.next().getFlag()==true)
-					{
-						finalFlag=true;
-					}
-					else {
-						finalFlag=false;
-					}
-				}
-				
-				}
-				
-				
-				
-				}*/
 					
 			
 			//}
@@ -411,6 +373,29 @@ public class Executor {
 			obj.put("venue", ipls.getVenue());
 			obj.put("umpire1", ipls.getUmpire1());
 			obj.put("umpire2", ipls.getUmpire2());
+			
+			
+			
+			System.out.print(String.format("%.40s   ", ipls.getId()));
+			System.out.print(String.format("%.40s   ", ipls.getCity()));
+			System.out.print(String.format("%.40s   ", ipls.getDate()));
+			System.out.print(String.format("%.40s   ", ipls.getTeam1()));
+			System.out.print(String.format("%.40s   ", ipls.getTeam2()));
+			System.out.print(String.format("%.40s   ", ipls.getToss_winner()));
+			System.out.print(String.format("%.40s   ", ipls.getToss_decision()));
+			System.out.print(String.format("%.40s   ", ipls.getResult()));
+			System.out.print(String.format("%.40s   ", ipls.getDl_applied()));
+			System.out.print(String.format("%.40s   ", ipls.getWinner()));
+			System.out.print(String.format("%.40s   ", ipls.getWin_by_runs()));
+			System.out.print(String.format("%.40s   ", ipls.getWin_by_wickets()));
+			System.out.print(String.format("%.40s   ", ipls.getPlayer_of_match()));
+			System.out.print(String.format("%.40s   ", ipls.getVenue()));
+			System.out.print(String.format("%.40s   ", ipls.getUmpire1()));
+			System.out.print(String.format("%.40s   ", ipls.getUmpire2()));
+
+
+
+			
 
 
 
@@ -418,6 +403,7 @@ public class Executor {
 		if(para.getPara().equalsIgnoreCase("id")) {
 
 			obj.put("id",ipls.getId());
+			System.out.print(String.format("%.40s   ", ipls.getId()));
 		}
 		
 
@@ -425,6 +411,7 @@ public class Executor {
 		 if(para.getPara().equalsIgnoreCase("city")) {
 			
 				obj.put("city",ipls.getCity());
+				System.out.print(String.format("%.40s   ", ipls.getCity()));
 
 			}
 	
@@ -433,6 +420,7 @@ public class Executor {
 		 if(para.getPara().equalsIgnoreCase("date")) {
 	
 				obj.put("date",ipls.getDate());
+				System.out.print(String.format("%.40s   ", ipls.getDate()));
 
 			}
 	
@@ -442,6 +430,7 @@ public class Executor {
 		
 
 			obj.put("team1",ipls.getTeam1());
+			System.out.print(String.format("%.40s   ", ipls.getTeam1()));
 
 		}	
 			
@@ -451,6 +440,7 @@ public class Executor {
 
 
 				obj.put("team2",ipls.getTeam2());
+				System.out.print(String.format("%.40s   ", ipls.getTeam2()));
 
 			}
 		
@@ -460,6 +450,7 @@ public class Executor {
 		 if(para.getPara().equalsIgnoreCase("toss_winner")) {
 	
 				obj.put("toss_winner", ipls.getToss_winner());
+				System.out.print(String.format("%.40s   ", ipls.getToss_winner()));
 
 			}
 	
@@ -468,6 +459,7 @@ public class Executor {
 		 if(para.getPara().equalsIgnoreCase("toss_decision")) {
 	
 				obj.put("toss_decision", ipls.getToss_decision());
+				System.out.print(String.format("%.40s   ", ipls.getToss_decision()));
 
 			}
 	
@@ -476,6 +468,7 @@ public class Executor {
 		 if(para.getPara().equalsIgnoreCase("result")) {
 
 				obj.put("result", ipls.getResult());	
+				System.out.print(String.format("%.40s   ", ipls.getResult()));
 
 			}
 		
@@ -484,6 +477,7 @@ public class Executor {
 		 if(para.getPara().equalsIgnoreCase("dl_applied")) {
 
 				obj.put("dl_applied", ipls.getDl_applied());
+				System.out.print(String.format("%.40s   ", ipls.getDl_applied()));
 
 		
 		 }
@@ -491,6 +485,7 @@ public class Executor {
 		 if(para.getPara().equalsIgnoreCase("winner")) {
 
 				obj.put("winner", ipls.getWinner());
+				System.out.print(String.format("%.40s   ", ipls.getWinner()));
 			
 			}
 
@@ -499,10 +494,12 @@ public class Executor {
 		 if(para.getPara().equalsIgnoreCase("win_by_runs")) {
 
 				obj.put("win_by_runs", ipls.getWin_by_runs());
+				System.out.print(String.format("%.40s   ", ipls.getWin_by_runs()));
 			}
 		
 		 if(para.getPara().equalsIgnoreCase("win_by_wickets")) {
 				obj.put("win_by_wickets", ipls.getWin_by_wickets());
+				System.out.print(String.format("%.40s   ", ipls.getWin_by_wickets()));
 
 			}
 			
@@ -510,6 +507,7 @@ public class Executor {
 		 if(para.getPara().equalsIgnoreCase("player_of_match")) {
 
 				obj.put("player_of_match", ipls.getPlayer_of_match());
+				System.out.print(String.format("%.40s   ", ipls.getPlayer_of_match()));
 
 			}
 	
@@ -518,6 +516,7 @@ public class Executor {
 		 if(para.getPara().equalsIgnoreCase("venue")) {
 
 				obj.put("venue", ipls.getVenue());
+				System.out.print(String.format("%.40s   ", ipls.getVenue()));
 
 			}
 
@@ -526,6 +525,7 @@ public class Executor {
 		 if(para.getPara().equalsIgnoreCase("umpire1")) {
 
 				obj.put("umpire1", ipls.getUmpire1());
+				System.out.print(String.format("%.40s   ", ipls.getUmpire1()));
 		
 			}
 
@@ -534,21 +534,16 @@ public class Executor {
 		 if(para.getPara().equalsIgnoreCase("umpire2")) {
 
 				obj.put("umpire2", ipls.getUmpire2());	
+				System.out.print(String.format("%.40s   ", ipls.getUmpire2()));
 			
 		}
-
+		 
 		
 		
 		}
-        try {
-        	FileWriter file = new FileWriter("test.json",true);
+		match.add(obj);
+		System.out.println("\n");
 
-            file.write(obj.toJSONString()+"\n");
-            file.flush();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 		
 		
 		
@@ -700,7 +695,20 @@ public class Executor {
 		
 		}*/
 			}
+			
+
+			
+			
 		}
+        try {
+        	FileWriter file = new FileWriter("test.json",true);
+
+            file.write(match.toJSONString());
+            file.flush();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 		
 
