@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.ParseException;
 //import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -16,8 +17,8 @@ public class Query {
 		// TODO Auto-generated method stub
 	ArrayList<IPLStats> al= new ArrayList<IPLStats>();
 	
-	//String csvFile="/home/mukyadav/Development/STS/Query/src/main/resources/ipl.csv"	;
-	String csvFile="/home/sapient/Desktop/Mukesh/SDev/STS/Query/src/main/resources/ipl.csv"	;
+	String csvFile="/home/mukyadav/Development/STS/Query/src/main/resources/ipl.csv"	;
+	//String csvFile="/home/sapient/Desktop/Mukesh/SDev/STS/Query/src/main/resources/ipl.csv"	;
 
 	String line="";
 	String cvsSplitBy="[,]";
@@ -112,7 +113,7 @@ public class Query {
 	
 																							//issue in win_by_runs		
 	final String WITH_DELIMITER = "((?<=%1$s)|(?=%1$s))";
-	String query="select id, date ,city from ipl.csv where  city ='Bangalore' and id <=20  order by id group by city";
+	String query="select id ,date ,city from ipl.csv where  city ='Bangalore' and id <=20  order by id group by city";
 	System.out.println(query);
 	//for spllitting and keeping the delimiter
 	String arr[]=query.split(String.format(WITH_DELIMITER,"[,'*!<>=\\s]"));
@@ -168,7 +169,15 @@ public class Query {
 	if(re!=null) {
 	//executing based on filter	
 	ExecuteLogical execL=new ExecuteLogical();
-	//execL.executeLogical(paraList,re, or);
+	try {
+		execL.executeLogical(paraList,re, or);
+	} catch (ParseException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (org.json.simple.parser.ParseException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
 	}
 	
 	}

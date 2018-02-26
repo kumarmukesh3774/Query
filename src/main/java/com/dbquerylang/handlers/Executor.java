@@ -204,6 +204,7 @@ public class Executor {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        JSONObject object=new JSONObject();
         JSONArray match = new JSONArray();
 		/*JSONObject obj = new JSONObject();
 
@@ -228,15 +229,7 @@ public class Executor {
 
 			Stack st = new Stack();
 			
-			System.out.println("\n");
-			Iterator<QueryParameterclass> it= al.iterator();
-			while(it.hasNext()) {
-				 
-				QueryParameterclass para=it.next();
-				System.out.print(String.format("%2.40s      ", para.getPara()));
-				
-			}
-				System.out.println("\n");
+
 			
 	
 		ArrayList<Flags> flagAl=new ArrayList<Flags>();
@@ -359,7 +352,7 @@ public class Executor {
 			
 			obj.put("id",ipls.getId());
 			obj.put("city",ipls.getCity());
-			obj.put("date",ipls.getDate());
+			obj.put("date",ipls.getDate().toString());
 			obj.put("team1",ipls.getTeam1());
 			obj.put("team2",ipls.getTeam2());
 			obj.put("toss_winner", ipls.getToss_winner());
@@ -374,36 +367,12 @@ public class Executor {
 			obj.put("umpire1", ipls.getUmpire1());
 			obj.put("umpire2", ipls.getUmpire2());
 			
-			
-			
-			System.out.print(String.format("%.40s   ", ipls.getId()));
-			System.out.print(String.format("%.40s   ", ipls.getCity()));
-			System.out.print(String.format("%.40s   ", ipls.getDate()));
-			System.out.print(String.format("%.40s   ", ipls.getTeam1()));
-			System.out.print(String.format("%.40s   ", ipls.getTeam2()));
-			System.out.print(String.format("%.40s   ", ipls.getToss_winner()));
-			System.out.print(String.format("%.40s   ", ipls.getToss_decision()));
-			System.out.print(String.format("%.40s   ", ipls.getResult()));
-			System.out.print(String.format("%.40s   ", ipls.getDl_applied()));
-			System.out.print(String.format("%.40s   ", ipls.getWinner()));
-			System.out.print(String.format("%.40s   ", ipls.getWin_by_runs()));
-			System.out.print(String.format("%.40s   ", ipls.getWin_by_wickets()));
-			System.out.print(String.format("%.40s   ", ipls.getPlayer_of_match()));
-			System.out.print(String.format("%.40s   ", ipls.getVenue()));
-			System.out.print(String.format("%.40s   ", ipls.getUmpire1()));
-			System.out.print(String.format("%.40s   ", ipls.getUmpire2()));
-
-
-
-			
-
 
 
 		}
 		if(para.getPara().equalsIgnoreCase("id")) {
 
 			obj.put("id",ipls.getId());
-			System.out.print(String.format("%.40s   ", ipls.getId()));
 		}
 		
 
@@ -411,7 +380,6 @@ public class Executor {
 		 if(para.getPara().equalsIgnoreCase("city")) {
 			
 				obj.put("city",ipls.getCity());
-				System.out.print(String.format("%.40s   ", ipls.getCity()));
 
 			}
 	
@@ -419,8 +387,7 @@ public class Executor {
 		
 		 if(para.getPara().equalsIgnoreCase("date")) {
 	
-				obj.put("date",ipls.getDate());
-				System.out.print(String.format("%.40s   ", ipls.getDate()));
+				obj.put("date",ipls.getDate().toString());
 
 			}
 	
@@ -430,7 +397,6 @@ public class Executor {
 		
 
 			obj.put("team1",ipls.getTeam1());
-			System.out.print(String.format("%.40s   ", ipls.getTeam1()));
 
 		}	
 			
@@ -440,7 +406,6 @@ public class Executor {
 
 
 				obj.put("team2",ipls.getTeam2());
-				System.out.print(String.format("%.40s   ", ipls.getTeam2()));
 
 			}
 		
@@ -450,7 +415,6 @@ public class Executor {
 		 if(para.getPara().equalsIgnoreCase("toss_winner")) {
 	
 				obj.put("toss_winner", ipls.getToss_winner());
-				System.out.print(String.format("%.40s   ", ipls.getToss_winner()));
 
 			}
 	
@@ -459,7 +423,6 @@ public class Executor {
 		 if(para.getPara().equalsIgnoreCase("toss_decision")) {
 	
 				obj.put("toss_decision", ipls.getToss_decision());
-				System.out.print(String.format("%.40s   ", ipls.getToss_decision()));
 
 			}
 	
@@ -468,7 +431,6 @@ public class Executor {
 		 if(para.getPara().equalsIgnoreCase("result")) {
 
 				obj.put("result", ipls.getResult());	
-				System.out.print(String.format("%.40s   ", ipls.getResult()));
 
 			}
 		
@@ -477,7 +439,6 @@ public class Executor {
 		 if(para.getPara().equalsIgnoreCase("dl_applied")) {
 
 				obj.put("dl_applied", ipls.getDl_applied());
-				System.out.print(String.format("%.40s   ", ipls.getDl_applied()));
 
 		
 		 }
@@ -485,7 +446,6 @@ public class Executor {
 		 if(para.getPara().equalsIgnoreCase("winner")) {
 
 				obj.put("winner", ipls.getWinner());
-				System.out.print(String.format("%.40s   ", ipls.getWinner()));
 			
 			}
 
@@ -494,12 +454,10 @@ public class Executor {
 		 if(para.getPara().equalsIgnoreCase("win_by_runs")) {
 
 				obj.put("win_by_runs", ipls.getWin_by_runs());
-				System.out.print(String.format("%.40s   ", ipls.getWin_by_runs()));
 			}
 		
 		 if(para.getPara().equalsIgnoreCase("win_by_wickets")) {
 				obj.put("win_by_wickets", ipls.getWin_by_wickets());
-				System.out.print(String.format("%.40s   ", ipls.getWin_by_wickets()));
 
 			}
 			
@@ -507,7 +465,6 @@ public class Executor {
 		 if(para.getPara().equalsIgnoreCase("player_of_match")) {
 
 				obj.put("player_of_match", ipls.getPlayer_of_match());
-				System.out.print(String.format("%.40s   ", ipls.getPlayer_of_match()));
 
 			}
 	
@@ -516,7 +473,6 @@ public class Executor {
 		 if(para.getPara().equalsIgnoreCase("venue")) {
 
 				obj.put("venue", ipls.getVenue());
-				System.out.print(String.format("%.40s   ", ipls.getVenue()));
 
 			}
 
@@ -525,7 +481,6 @@ public class Executor {
 		 if(para.getPara().equalsIgnoreCase("umpire1")) {
 
 				obj.put("umpire1", ipls.getUmpire1());
-				System.out.print(String.format("%.40s   ", ipls.getUmpire1()));
 		
 			}
 
@@ -534,7 +489,6 @@ public class Executor {
 		 if(para.getPara().equalsIgnoreCase("umpire2")) {
 
 				obj.put("umpire2", ipls.getUmpire2());	
-				System.out.print(String.format("%.40s   ", ipls.getUmpire2()));
 			
 		}
 		 
@@ -542,6 +496,7 @@ public class Executor {
 		
 		}
 		match.add(obj);
+		object.put("matches", match);
 		System.out.println("\n");
 
 		
@@ -703,7 +658,7 @@ public class Executor {
         try {
         	FileWriter file = new FileWriter("test.json",true);
 
-            file.write(match.toJSONString());
+            file.write(object.toJSONString());
             file.flush();
 
         } catch (IOException e) {
