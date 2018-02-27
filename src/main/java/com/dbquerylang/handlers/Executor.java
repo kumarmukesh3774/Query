@@ -138,7 +138,7 @@ public class Executor {
 					//System.out.println("!===========!=================<==");
 					
 				}
-			}
+			} 
 			else if(operator.getOperator1().equals("")){
 				if(operator.getOperator().equals("<"))
 				{
